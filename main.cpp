@@ -4,7 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "mst.hpp"
+#include <chrono> 
+
 using namespace std;
+using namespace std::chrono;
 
 void saveSolution( vector<Edge>& solution){
   FILE* fileOut = NULL;
@@ -32,12 +35,23 @@ int main(int argc, char **argv)
 
     ListOfCities *cities;
     cities = citiesReader(popMin);
-        
+    printf("== cities have been read ==");
+
+    auto start = high_resolution_clock::now(); 
     Mst mst(cities); 
     vector<Edge> solution =  mst.solve();
+    auto stop = high_resolution_clock::now(); 
+
+    auto duration = duration_cast<microseconds>(stop - start); 
+
+    cout << "For (" << cities->number << ") cities " << endl; 
+    cout << "Executuin time: " << duration.count() << " microseconds" << endl;
+
+
     cout << cities->number << endl ; 
     cout << solution.size() << endl ; 
-    
+
+
     saveSolution(solution); 
 
     

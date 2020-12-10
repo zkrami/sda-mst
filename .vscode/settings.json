@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "queue": "cpp",
-        "mst": "cpp"
+        "mst": "cpp",
+        "iostream": "cpp",
+        "chrono": "cpp"
     }
 }

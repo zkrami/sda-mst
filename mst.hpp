@@ -37,6 +37,7 @@ class Mst
     vector<vector<double>> adjList;
 
     ListOfCities *cities;
+    int N; 
     void createGraph()
     {
         printf("== Creating the adjacent list == \n"); 
@@ -78,23 +79,22 @@ public:
     Mst(ListOfCities *cities)
     {
         this->cities = cities;
-        this->createGraph();
+        this->N = cities->number; 
+       // this->createGraph();
     }
     /**
      * @return vector<Edge> la solution 
     */
     vector<Edge> solve()
     {
-
         printf("== Finding the MST of the graph == \n"); 
         vector<Edge> solution;
         double cost = 0;
         priority_queue<Edge> Q;                  // tas minimum pour chosir le minimum arret
-        vector<bool> visited(adjList.size(), 0); // visited[i] indique si on est passé par le noeud i
+        vector<bool> visited(N, 0); // visited[i] indique si on est passé par le noeud i
         Q.push(Edge(-1, 0, 0));
-
         while (!Q.empty())
-        {
+        {   
             Edge currentEdge = Q.top(); // on prend le minimum arret
             Q.pop();                // suprrime
             int current = currentEdge.to;
@@ -104,15 +104,16 @@ public:
             visited[current] = true; // marque qu'on est passé par ce noeud
             if (currentEdge.from != -1)     // si c'est pas le premier arret
                 solution.push_back(currentEdge);
+                
             cost += currentEdge.weight ;
-            for (int child = 0; child < adjList.size(); child++)
-            {
-                // 1
-                // 0 2 3 4 5
 
-                if (child == current || visited[child])
+            for (int child = 0; child < N ; child++)
+            {
+
+                if (child == current || visited[child]) 
                     continue;
-                Q.push(Edge(current, child, adjList[current][child]));
+
+                Q.push(Edge(current, child, calcDistance(current,child)));
             }
         }
         cout << "Longeur du réseau = " << cost << endl ; 
