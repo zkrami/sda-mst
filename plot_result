@@ -1,0 +1,15 @@
+# Script GNUPLOT
+# Dire que le fichier de sortie est un fichier Postscript
+set terminal pdf color
+
+set xlabel "Nombre de villes" font "Helvetica,24"
+
+set ylabel "Temps d'execution " font "Helvetica,24"
+
+# Nom du fichier Postscript en sortie
+set output 'execution_time_analsys.pdf' 
+
+f(x) = ( x * x * 1.6 )
+
+
+plot [0:20000][0:500000000] 'execution_time.plot' using 1:2 w lines title "Execution Temps" , f(x) title ' E * 1.6 ' 
